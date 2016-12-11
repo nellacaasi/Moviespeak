@@ -30,8 +30,6 @@ public class MovieSpeakAPI implements IMovieSpeakAPI {
 	 public void load() throws Exception{
 		  if (data.isFile()){
 			  serializer.read();
-			  Rating.counter = (Long) serializer.pop();
-			  Movie.counter = (Long) serializer.pop();
 			  ratingIndex = (Map<Long, Rating>) serializer.pop();
 			  movieIndex = (Map<Long, Movie>) serializer.pop();
 			  userIndex = (Map<Long, User>) serializer.pop();
@@ -59,8 +57,6 @@ public class MovieSpeakAPI implements IMovieSpeakAPI {
 		 serializer.push(userIndex);
 		 serializer.push(movieIndex);
 		 serializer.push(ratingIndex);
-		 serializer.push(Movie.counter);
-		 serializer.push(Rating.counter);
 		 serializer.write();
 	 }
 
@@ -75,7 +71,7 @@ public class MovieSpeakAPI implements IMovieSpeakAPI {
 	 
 	 public void addMovie(String title, String year, String url){
 		 Movie movie = new Movie (title, year, url);
-		 movieIndex.put(movie.getId(), movie);
+		 movieIndex.put(movieIndex.size()+1l, movie);
 	 }
 
 	 public void removeUser(Long id) {
@@ -88,7 +84,7 @@ public class MovieSpeakAPI implements IMovieSpeakAPI {
 	 
 	 public void addRating(Long userID, Long movieID, int rating){
 		 Rating newRating = new Rating (userID, movieID, rating);
-		 ratingIndex.put(newRating.id, newRating);
+		 ratingIndex.put(ratingIndex.size()+1l, newRating);
 	 }
 	 
 	 public void removeRating(Long id){

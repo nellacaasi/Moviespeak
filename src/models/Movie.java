@@ -1,7 +1,6 @@
 package models;
 
 public class Movie {
-	public static Long counter = 0l;
 	
 	private Long id;
 	
@@ -11,7 +10,7 @@ public class Movie {
 	
 	
 	public Movie(String title, String year, String url){
-		this.id		= counter++;
+		this.id		= null;
 		this.title	= title;
 		this.year 	= year;
 		this.url 	= url;

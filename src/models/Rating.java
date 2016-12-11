@@ -1,7 +1,6 @@
 package models;
 
 public class Rating {
-	public static Long counter = 0l;
 	
 	public Long id;
 	
@@ -9,7 +8,7 @@ public class Rating {
 	public long movieID;
 	
 	public Rating(long userID, long movieID, int rating){
-		this.id		= counter++;
+		this.id		= null;
 		this.userID	= userID;
 		this.movieID = movieID;
 	}
