@@ -48,4 +48,9 @@ public class Main{
 	 public void removeMovie (@Param(name="id") Long id){
 		 movieSpeak.removeMovie(id);
 	 }
+	 
+	 @Command(description="Return a users ratings")
+	 public void getUserRatings(@Param(name="id") Long id){
+		 System.out.println(movieSpeak.getUserRatings(id).toString());
+	 }
 }
