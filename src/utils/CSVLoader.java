@@ -19,15 +19,14 @@ public class CSVLoader{
 		while (!inUsers.isEmpty()){
 			String userDetails = inUsers.readLine();
 			String[] userTokens = userDetails.split(delims);
-			if (userTokens.length == 7){
+			if (userTokens.length >= 6){
 				Long id = Long.parseLong(userTokens[0]);
 				String firstName = userTokens[1];
 				String lastName = userTokens[2];
 				int age = Integer.parseInt(userTokens[3]);
 				String gender = userTokens[4];
 				String occupation = userTokens[5];
-				int zipcode = Integer.parseInt(userTokens[6]);
-				users.add(new User(id,firstName, lastName, age, gender, occupation, zipcode));
+				users.add(new User(id, firstName, lastName, age, gender, occupation));
 			}
 			
 			else{
@@ -73,8 +72,7 @@ public class CSVLoader{
 				if (ratingTokens.length >= 4){
 					Long userid = Long.parseLong(ratingTokens[0]);
 					int score = Integer.parseInt(ratingTokens[1]);
-					double timestamp = Double.parseDouble(ratingTokens[2]);
-					ratings.add(new Rating(userid, score, score, timestamp));
+					ratings.add(new Rating(userid, score, score));
 				}
 				
 				else{

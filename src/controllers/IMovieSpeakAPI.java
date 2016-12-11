@@ -1,5 +1,7 @@
 package controllers;
 
+import models.Movie;
+
 public interface IMovieSpeakAPI {
 	
 	public void addUser(String firstName, String lastName, int age,String gender,String occupation);
@@ -8,9 +10,9 @@ public interface IMovieSpeakAPI {
 	
 	public void addMovie(String title, String year, String url);
 	
-	public void addRating(Long userID, Long movieID, int rating, double timestamp);
+	public void addRating(Long userID, Long movieID, int rating);
 	
-	public void getMovie(Long movieID);
+	public Movie getMovie(Long movieID);
 	
 	public void getUserRatings(Long userID);
 	
