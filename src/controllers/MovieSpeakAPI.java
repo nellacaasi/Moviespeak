@@ -1,6 +1,8 @@
 package controllers;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,6 +24,8 @@ public class MovieSpeakAPI implements IMovieSpeakAPI {
 	 
 	 public File  data = new File("data.xml");
 	 public  Serializer serializer = new XMLSerializer(data);
+	 
+	 List<Rating> ratingMatchesList;
 
 	 public MovieSpeakAPI(){
 		 
@@ -36,17 +40,17 @@ public class MovieSpeakAPI implements IMovieSpeakAPI {
 		  }
 		  else{
 			  CSVLoader loader = new CSVLoader();
-			  List <User> users = loader.loadUsers("moviedata_small/users5.dat");
+			  List <User> users = loader.loadUsers("moviedata/users.dat");
 			  for (User user : users){
 				  userIndex.put(user.getId(), user);
 			  }
 			 
-			  List <Movie> movies = loader.loadMovies("moviedata_small/items5.dat");
+			  List <Movie> movies = loader.loadMovies("moviedata/items.dat");
 			  for (Movie movie : movies){
 				  movieIndex.put(movie.getId(), movie);
 			  }
 			 
-			  List <Rating> ratings = loader.loadRatings("moviedata_small/ratings5.dat");
+			  List <Rating> ratings = loader.loadRatings("moviedata/ratings.dat");
 			  for (Rating rating : ratings){
 				  ratingIndex.put(rating.id, rating);
 			  }
@@ -101,23 +105,24 @@ public class MovieSpeakAPI implements IMovieSpeakAPI {
 	}
 
 	@Override
-	public void getUserRatings(Long userID1) {
+	public List<Rating> getUserRatings(Long userID1) {
+		ratingMatchesList = new ArrayList<Rating>();
 		for (Entry<Long, Rating> entry : ratingIndex.entrySet())
 		{
 			if(userID1 == entry.getValue().userID){
+				ratingMatchesList.add(entry.getValue());
 			}
 		}
+		return ratingMatchesList;
 	}
 
 	@Override
 	public void getUserRecommendations(Long userID) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void getTopTenMovies() {
-		// TODO Auto-generated method stub
 		
 	}
 

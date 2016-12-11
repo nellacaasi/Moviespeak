@@ -1,6 +1,9 @@
 package controllers;
 
+import java.util.List;
+
 import models.Movie;
+import models.Rating;
 
 public interface IMovieSpeakAPI {
 	
@@ -14,7 +17,7 @@ public interface IMovieSpeakAPI {
 	
 	public Movie getMovie(Long movieID);
 	
-	public void getUserRatings(Long userID);
+	public List<Rating> getUserRatings(Long userID);
 	
 	public void getUserRecommendations(Long userID);
 	
