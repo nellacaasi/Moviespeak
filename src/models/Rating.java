@@ -5,14 +5,21 @@ public class Rating {
 	
 	public Long id;
 	
-	public long userid;
+	public long userID;
+	public long movieID;
 	public int score;
 	public double timestamp;
 	
-	public Rating(long userid, int score, double timestamp){
+	public Rating(long userID, long movieID, int rating, double timestamp){
 		this.id		= counter++;
-		this.userid	= userid;
+		this.userID	= userID;
+		this.movieID = movieID;
 		this.score = score;
 		this.timestamp = timestamp;
+	}
+
+	@Override
+	public String toString() {
+		return "Rating [id=" + id + ", userid=" + userID + ", score=" + score + ", timestamp=" + timestamp + "]";
 	}
 }

@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,27 +9,48 @@ import models.Movie;
 import models.Rating;
 import models.User;
 import utils.CSVLoader;
+import utils.Serializer;
 import utils.XMLSerializer;
 
-public class MovieSpeakAPI {
+public class MovieSpeakAPI implements IMovieSpeakAPI {
 	 public Map<Long, User> userIndex = new HashMap<>();
 	 public Map<Long, Movie> movieIndex = new HashMap<>();
 	 public Map<Long, Rating> ratingIndex = new HashMap<>();
 	 
-	 public XMLSerializer serializer;
+	 public File  data = new File("data.xml");
+	 public  Serializer serializer = new XMLSerializer(data);
 
 	 public MovieSpeakAPI(){
 		 
 	 }
 	 
 	 public void load() throws Exception{
-		 serializer.read();
-		 userIndex = (Map<Long, User>) serializer.pop();
-		 movieIndex = (Map<Long, Movie>) serializer.pop();
-		 ratingIndex = (Map<Long, Rating>) serializer.pop();
-		 User.counter = (Long) serializer.pop();
-		 Movie.counter = (Long) serializer.pop();
-		 Rating.counter = (Long) serializer.pop();
+		  if (data.isFile()){
+				  serializer.read();
+				  userIndex = (Map<Long, User>) serializer.pop();
+				  movieIndex = (Map<Long, Movie>) serializer.pop();
+				  ratingIndex = (Map<Long, Rating>) serializer.pop();
+				  User.counter = (Long) serializer.pop();
+				  Movie.counter = (Long) serializer.pop();
+				  Rating.counter = (Long) serializer.pop();
+		  }
+		  else{
+				  CSVLoader loader = new CSVLoader();
+				  List <User> users = loader.loadUsers("moviedata_small/users5.dat");
+				  for (User user : users){
+					  userIndex.put(user.id, user);
+				  }
+				 
+				  List <Movie> movies = loader.loadMovies("moviedata_small/items5.dat");
+				  for (Movie movie : movies){
+					  movieIndex.put(movie.getId(), movie);
+				  }
+				 
+				  List <Rating> ratings = loader.loadRatings("moviedata_small/ratings5.dat");
+				  for (Rating rating : ratings){
+					  ratingIndex.put(rating.id, rating);
+				  }
+		  }
 	 }
 
 	 public void store() throws Exception{
@@ -40,35 +62,20 @@ public class MovieSpeakAPI {
 		 serializer.push(Rating.counter);
 		 serializer.write();
 	 }
-	 
-	 public void prime() throws Exception{
-		 CSVLoader loader = new CSVLoader();
-		 List <User> users = loader.loadUsers("moviedata_small/users5.dat");
-		 for (User user : users){
-			 userIndex.put(user.id, user);
-		 }
-		 
-		 List <Movie> movies = loader.loadMovies("moviedata_small/items5.dat");
-		 for (Movie movie : movies){
-			 movieIndex.put(movie.id, movie);
-		 }
-		 
-		 List <Rating> ratings = loader.loadRatings("moviedata_small/ratings5.dat");
-		 for (Rating rating : ratings){
-			 ratingIndex.put(rating.id, rating);
-		 }
-	 }
 
-	 public User addUser(String firstName, String lastName, String age, String gender, String occupation, int zipcode){
+	 public User addUser(String firstName, String lastName, int age, String gender, String occupation, int zipcode){
 		 User user = new User (firstName, lastName, age, gender, occupation, zipcode);
 		 userIndex.put(user.id, user);
 		 return user;
 	 }
 	 
-	 public Movie addMovie(String title, String year, String url){
+	 public void addUser(User user) {
+		 userIndex.put(user.id, user);
+	 }
+	 
+	 public void addMovie(String title, String year, String url){
 		 Movie movie = new Movie (title, year, url);
-		 movieIndex.put(movie.id, movie);
-		 return movie;
+		 movieIndex.put(movie.getId(), movie);
 	 }
 
 	 public void removeUser(Long id) {
@@ -79,10 +86,9 @@ public class MovieSpeakAPI {
 		movieIndex.remove(id);
 	 }
 	 
-	 public Rating addRating(long userid, int score, double timestamp){
-		 Rating rating = new Rating (userid, score, timestamp);
-		 ratingIndex.put(rating.id, rating);
-		 return rating;
+	 public void addRating(Long userID, Long movieID, int rating, double timestamp){
+		 Rating newRating = new Rating (userID, movieID, rating, timestamp);
+		 ratingIndex.put(newRating.id, newRating);
 	 }
 	 
 	 public void removeRating(Long id){
@@ -92,4 +98,35 @@ public class MovieSpeakAPI {
 	 public void authenticate(String stringid, char[] password){
 		Long id = Long.parseLong(stringid);
 	 }
+
+	@Override
+	public void addUser(String firstName, String lastName, int age, String gender, String occupation) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getMovie(Long movieID) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getUserRatings(Long userID) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getUserRecommendations(Long userID) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getTopTenMovies() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

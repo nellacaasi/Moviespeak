@@ -7,7 +7,7 @@ import java.util.List;
 import models.Movie;
 import models.Rating;
 import models.User;
-import utils.stdlib.*;
+import edu.princeton.cs.introcs.*;
 
 public class CSVLoader{
 	public List<User> loadUsers(String filename) throws Exception{
@@ -20,14 +20,14 @@ public class CSVLoader{
 			String userDetails = inUsers.readLine();
 			String[] userTokens = userDetails.split(delims);
 			if (userTokens.length == 7){
-				String id = userTokens[0];
+				Long id = Long.parseLong(userTokens[0]);
 				String firstName = userTokens[1];
 				String lastName = userTokens[2];
-				String age = userTokens[3];
+				int age = Integer.parseInt(userTokens[3]);
 				String gender = userTokens[4];
-				String occupation = userTokens[6];
-				int zipcode = Integer.parseInt(userTokens[7]);
-				users.add(new User(firstName, lastName, gender, age, occupation, zipcode));
+				String occupation = userTokens[5];
+				int zipcode = Integer.parseInt(userTokens[6]);
+				users.add(new User(id,firstName, lastName, age, gender, occupation, zipcode));
 			}
 			
 			else{
@@ -70,11 +70,11 @@ public class CSVLoader{
 			while (!inRatings.isEmpty()){
 				String ratingDetails = inRatings.readLine();
 				String[] ratingTokens = ratingDetails.split(delims);
-				if (ratingTokens.length > 4){
+				if (ratingTokens.length >= 4){
 					Long userid = Long.parseLong(ratingTokens[0]);
 					int score = Integer.parseInt(ratingTokens[1]);
 					double timestamp = Double.parseDouble(ratingTokens[2]);
-					ratings.add(new Rating(userid, score, timestamp));
+					ratings.add(new Rating(userid, score, score, timestamp));
 				}
 				
 				else{
