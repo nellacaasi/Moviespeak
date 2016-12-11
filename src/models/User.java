@@ -12,15 +12,17 @@ public class User {
 	public String gender;
 	public String age;
 	public String occupation;
+	public int zipcode;
 	
 	public List <Rating> ratings = new ArrayList<>();
 	
-	public User(String firstName, String lastName, String gender, String age, String occupation){
+	public User(String firstName, String lastName, String gender, String age, String occupation, int zipcode){
 		this.id			= counter++;
 		this.firstName 	= firstName;
 		this.lastName	= lastName;
 		this.gender		= gender;
 		this.age		= age;
 		this.occupation	= occupation;
+		this.zipcode	= zipcode;
 	}
 }

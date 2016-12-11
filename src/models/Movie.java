@@ -1,13 +1,14 @@
 package models;
 
 public class Movie {
-	static Long counter = 0l;
+	public static Long counter = 0l;
 	
 	public Long id;
 	
 	public String title;
 	public String year;
 	public String url;
+	
 	
 	public Movie(String title, String year, String url){
 		this.id		= counter++;

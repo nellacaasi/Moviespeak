@@ -1,18 +1,18 @@
 package models;
 
 public class Rating {
-	static Long counter = 0l;
+	public static Long counter = 0l;
 	
 	public Long id;
 	
-	public String title;
-	public String comment;
+	public long userid;
 	public int score;
+	public double timestamp;
 	
-	public Rating(String title, String comment, int score){
+	public Rating(long userid, int score, double timestamp){
 		this.id		= counter++;
-		this.title	= title;
-		this.comment= comment;
-		this.score 	= score;
+		this.userid	= userid;
+		this.score = score;
+		this.timestamp = timestamp;
 	}
 }

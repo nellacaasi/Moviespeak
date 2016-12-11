@@ -21,13 +21,14 @@ public class MovieSpeakAPI {
 		 
 	 }
 	 
-	 public void load() throws Exception
-	 {
-	 serializer.read();
-	 userIndex = (Map<Long, User>) serializer.pop();
-	 movieIndex = (Map<Long, Movie>) serializer.pop();
-	 ratingIndex = (Map<Long, Rating>) serializer.pop();
-	 User.counter = (Long) serializer.pop();
+	 public void load() throws Exception{
+		 serializer.read();
+		 userIndex = (Map<Long, User>) serializer.pop();
+		 movieIndex = (Map<Long, Movie>) serializer.pop();
+		 ratingIndex = (Map<Long, Rating>) serializer.pop();
+		 User.counter = (Long) serializer.pop();
+		 Movie.counter = (Long) serializer.pop();
+		 Rating.counter = (Long) serializer.pop();
 	 }
 
 	 public void store() throws Exception{
@@ -35,6 +36,8 @@ public class MovieSpeakAPI {
 		 serializer.push(movieIndex);
 		 serializer.push(ratingIndex);
 		 serializer.push(User.counter);
+		 serializer.push(Movie.counter);
+		 serializer.push(Rating.counter);
 		 serializer.write();
 	 }
 	 
@@ -42,7 +45,7 @@ public class MovieSpeakAPI {
 		 CSVLoader loader = new CSVLoader();
 		 List <User> users = loader.loadUsers("moviedata_small/users5.dat");
 		 for (User user : users){
-			 userIndex.put(user.id,user);
+			 userIndex.put(user.id, user);
 		 }
 		 
 		 List <Movie> movies = loader.loadMovies("moviedata_small/items5.dat");
@@ -56,8 +59,8 @@ public class MovieSpeakAPI {
 		 }
 	 }
 
-	 public User addUser(String firstName, String lastName, String age, String gender, String occupation){
-		 User user = new User (firstName, lastName, age, gender, occupation);
+	 public User addUser(String firstName, String lastName, String age, String gender, String occupation, int zipcode){
+		 User user = new User (firstName, lastName, age, gender, occupation, zipcode);
 		 userIndex.put(user.id, user);
 		 return user;
 	 }
@@ -68,11 +71,25 @@ public class MovieSpeakAPI {
 		 return movie;
 	 }
 
-	public void removeUser(Long id) {
+	 public void removeUser(Long id) {
 		userIndex.remove(id);
-	}
+	 }
 	
-	public void authenticate(String stringid, char[] password){
+	 public void removeMovie(Long id){
+		movieIndex.remove(id);
+	 }
+	 
+	 public Rating addRating(long userid, int score, double timestamp){
+		 Rating rating = new Rating (userid, score, timestamp);
+		 ratingIndex.put(rating.id, rating);
+		 return rating;
+	 }
+	 
+	 public void removeRating(Long id){
+		 ratingIndex.remove(id);
+	 }
+	
+	 public void authenticate(String stringid, char[] password){
 		Long id = Long.parseLong(stringid);
-	}
+	 }
 }
