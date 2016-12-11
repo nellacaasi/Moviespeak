@@ -12,7 +12,7 @@ public class Movie {
 	public Movie(String title, String year, String url){
 		this.id		= counter++;
 		this.title	= title;
-		this.year = year;
-		this.url = url;
+		this.year 	= year;
+		this.url 	= url;
 	}
 }

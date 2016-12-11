@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-	static Long counter = 0l;
+	public static Long counter = 0l;
 	
 	public Long id;
 	public String firstName;
